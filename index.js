@@ -272,7 +272,6 @@ app.post("/auth/refresh-token", async (req, res) => {
   }
 });
 
-
 // async function insertData(data) {
 //   try {
 //     const savedData = await PC.insertMany(data);
@@ -284,7 +283,16 @@ app.post("/auth/refresh-token", async (req, res) => {
 
 // insertData(mockPCBuilds)
 
-
+app.get("/pcs", async (req, res) => {
+  try {
+    const pcs = await PC.find();
+    res.json(pcs);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: error.message });
+  }
+});
 
 app.listen(process.env.PORT, () => {
   console.log("Serevr is running on", process.env.PORT);
