@@ -305,6 +305,26 @@ app.get("/pcs/:id", async (req, res) => {
   }
 });
 
+app.post("/pcs", async (req, res) => {
+  const { buildName, price, buidler } = req.body;
+
+  if (!buildName || !price || !buidler) {
+    return res
+      .status(404)
+      .json({ message: "Please fill in all required fields" });
+  }
+
+  try {
+    const newPc = new PC({buidler,buildName,price})
+    const savedPc = await newPc.save()
+    res.status(201).json(savedPc)
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: error.message });
+  }
+});
+
 app.listen(process.env.PORT, () => {
   console.log("Serevr is running on", process.env.PORT);
 });
