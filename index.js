@@ -335,7 +335,23 @@ app.put("/pcs/:id", async (req, res) => {
       return res.status(404).json({ message: "Unable to find pc" });
     }
 
-    res.json(editedPc)
+    res.json(editedPc);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: error.message });
+  }
+});
+
+app.delete("/pcs/:id", async (req, res) => {
+  try {
+    const deletedPc = await PC.findOneAndDelete(req.params.id);
+
+    if (!deletedPc) {
+      return res.status(404).json({ message: "Unable to find pc" });
+    }
+
+    res.json({ message: "Deleted successfully", deletedPc: deletedPc });
   } catch (error) {
     res
       .status(500)
