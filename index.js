@@ -272,6 +272,20 @@ app.post("/auth/refresh-token", async (req, res) => {
   }
 });
 
+
+// async function insertData(data) {
+//   try {
+//     const savedData = await PC.insertMany(data);
+//     console.log(savedData);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
+
+// insertData(mockPCBuilds)
+
+
+
 app.listen(process.env.PORT, () => {
   console.log("Serevr is running on", process.env.PORT);
 });
