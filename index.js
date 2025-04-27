@@ -345,7 +345,7 @@ app.put("/pcs/:id", async (req, res) => {
 
 app.delete("/pcs/:id", async (req, res) => {
   try {
-    const deletedPc = await PC.findOneAndDelete(req.params.id);
+    const deletedPc = await PC.findByIdAndDelete(req.params.id);
 
     if (!deletedPc) {
       return res.status(404).json({ message: "Unable to find pc" });
