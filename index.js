@@ -315,9 +315,27 @@ app.post("/pcs", async (req, res) => {
   }
 
   try {
-    const newPc = new PC({buidler,buildName,price})
-    const savedPc = await newPc.save()
-    res.status(201).json(savedPc)
+    const newPc = new PC({ buidler, buildName, price });
+    const savedPc = await newPc.save();
+    res.status(201).json(savedPc);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: error.message });
+  }
+});
+
+app.put("/pcs/:id", async (req, res) => {
+  try {
+    const editedPc = await PC.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+
+    if (!editedPc) {
+      return res.status(404).json({ message: "Unable to find pc" });
+    }
+
+    res.json(editedPc)
   } catch (error) {
     res
       .status(500)
